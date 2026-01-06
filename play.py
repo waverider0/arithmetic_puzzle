@@ -12,55 +12,65 @@ TARGET_MIN = 10
 TARGET_MAX = 100
 OPS = ['Add', 'Sub', 'Mult', 'Div']
 
-# TODO: guarantee the expression contains the ops in a list. generate this list with a 50% chance for each op in OPS
-def random_expression(leaves):
+def generate_random_expression(leaves):
   if len(leaves) == 1: return ast.Constant(value=leaves[0])
   split = random.randint(1, len(leaves)-1)
-  left = random_expression(leaves[:split])
-  right = random_expression(leaves[split:])
+  left = generate_random_expression(leaves[:split])
+  right = generate_random_expression(leaves[split:])
   op = getattr(ast, random.choice(OPS))
   return ast.BinOp(left=left, op=op(), right=right)
 
-class Visitor(ast.NodeVisitor):
+class TargetVisitor(ast.NodeVisitor):
+  def __init__(self):
+    self.used_ops = []
+  def visit_BinOp(self, node):
+    self.used_ops.append(type(node.op).__name__)
+    self.generic_visit(node)
+
+class InputVisitor(ast.NodeVisitor):
   def __init__(self, counts):
     self.counts = counts
     self.used = defaultdict(int)
+    self.numbers = []
     self.error = ""
-
   def visit_BinOp(self, node):
     op = type(node.op).__name__
-    if op not in OPS: self.error = f"Can only use ops from {OPS}, got {op}"; return
+    if op not in OPS: self.error = f"Bad op: {op}"; return
     self.generic_visit(node)
-
   def visit_Constant(self, node):
-    if node.value not in self.counts.keys(): self.error = f"Can only use numbers from the list, got '{node.value}'"; return
-    if self.used[node.value] + 1 > self.counts[node.value]: self.error = 'Can only use each number in the list once'; return
+    if node.value not in self.counts.keys(): self.error = f"Extra number: '{node.value}'"; return
+    if self.used[node.value] + 1 > self.counts[node.value]: self.error = 'Number used more than once'; return
+    self.numbers.append(node.value)
     self.used[node.value] += 1
     self.generic_visit(node)
 
 if __name__ == '__main__':
+  guaranteed_ops = [op for op in OPS if random.random() < 0.5]
   while True:
     numbers = []
     counts = defaultdict(int)
     for i in range(random.randint(LIST_SIZE_MIN, LIST_SIZE_MAX)):
-      num = random.randint(NUMBER_MIN, NUMBER_MAX)
-      numbers.append(num)
-      counts[num] += 1
-    target_expr = ast.unparse(random_expression(numbers))
-    try: target = eval(compile(target_expr, '<string>', 'eval'))
-    except ZeroDivisionError: continue # TODO: add 'Pow' to OPS and catch OverflowError without stalling
-    if target.is_integer() and TARGET_MIN <= target <= TARGET_MAX: break
+      numbers.append(random.randint(NUMBER_MIN, NUMBER_MAX))
+      counts[numbers[i]] += 1
+    target_tree = generate_random_expression(numbers)
+    visitor = TargetVisitor()
+    visitor.visit(target_tree)
+    if all(op in visitor.used_ops for op in guaranteed_ops):
+      target_expression = ast.unparse(target_tree)
+      try: target = eval(compile(target_expression, '<ast>', 'eval'))
+      except ZeroDivisionError: continue
+      if target.is_integer() and TARGET_MIN <= target <= TARGET_MAX: break
   print(numbers)
-  print(f'Target: {int(target)}') # explicit cast to int to remove the trailing .0
+  print(f'Target: {int(target)}') # explicit cast to int to remove the trailing '.0'
 
   while True:
-    input_expr = input('Expression: ')
-    if input_expr == 'I GIVE UP': print(target_expr); break
-    nv = Visitor(counts)
-    nv.visit(ast.parse(input_expr))
-    if nv.error: print(nv.error); continue
-    if nv.used != counts: print(f'Must use every value in the list {numbers}, got {list(nv.used)}'); continue # FIXME: list(nv.used) omits multiplicity
-    try: result = eval(compile(input_expr, '<string>', 'eval'))
+    input_expression = input('Expression: ')
+    if input_expression == 'I GIVE UP': print(target_expression); break
+    visitor = InputVisitor(counts)
+    visitor.visit(ast.parse(input_expression))
+    if visitor.error: print(visitor.error); continue
+    if visitor.used != counts: print(f'Wrong numbers: used {visitor.numbers}'); continue
+    try: result = eval(compile(input_expression, '<string>', 'eval'))
     except Exception as e: print(e); continue
     if result == target: print("Correct!"); break
-    print(f'Incorrect (got {result}, expected {target})')
+    print(f'Incorrect (got {result}, want {target})')
