@@ -4,12 +4,12 @@ import ast
 from collections import defaultdict
 import random
 
+TARGET_MIN = 10
+TARGET_MAX = 200
+LIST_SIZE_MIN = 4
+LIST_SIZE_MAX = 8
 NUMBER_MIN = 1
 NUMBER_MAX = 20
-LIST_SIZE_MIN = 3
-LIST_SIZE_MAX = 6
-TARGET_MIN = 10
-TARGET_MAX = 100
 OPS = ['Add', 'Sub', 'Mult', 'Div']
 
 def generate_random_expression(leaves):
@@ -32,10 +32,10 @@ class InputVisitor(ast.NodeVisitor):
     self.counts = counts
     self.used = defaultdict(int)
     self.numbers = []
-    self.error = ""
+    self.error = ''
   def visit_BinOp(self, node):
     op = type(node.op).__name__
-    if op not in OPS: self.error = f"Bad op: {op}"; return
+    if op not in OPS: self.error = f'Bad op: {op}'; return
     self.generic_visit(node)
   def visit_Constant(self, node):
     if node.value not in self.counts.keys(): self.error = f"Extra number: '{node.value}'"; return
@@ -72,5 +72,5 @@ if __name__ == '__main__':
     if visitor.used != counts: print(f'Wrong numbers: used {visitor.numbers}'); continue
     try: result = eval(compile(input_expression, '<string>', 'eval'))
     except Exception as e: print(e); continue
-    if result == target: print("Correct!"); break
+    if result == target: print('Correct!'); break
     print(f'Incorrect (got {result}, want {target})')
