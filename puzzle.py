@@ -4,10 +4,9 @@ import ast
 from collections import defaultdict
 import random
 
+LIST_SIZE = 4
 TARGET_MIN = 10
 TARGET_MAX = 200
-LIST_SIZE_MIN = 4
-LIST_SIZE_MAX = 8
 NUMBER_MIN = 1
 NUMBER_MAX = 20
 OPS = ['Add', 'Sub', 'Mult', 'Div']
@@ -49,7 +48,7 @@ if __name__ == '__main__':
   while True:
     numbers = []
     counts = defaultdict(int)
-    for i in range(random.randint(LIST_SIZE_MIN, LIST_SIZE_MAX)):
+    for i in range(LIST_SIZE):
       numbers.append(random.randint(NUMBER_MIN, NUMBER_MAX))
       counts[numbers[i]] += 1
     target_tree = generate_random_expression(numbers)
