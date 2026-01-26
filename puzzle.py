@@ -54,7 +54,7 @@ if __name__ == '__main__':
     visitor.visit(target_tree)
     if all(op in visitor.used_ops for op in guaranteed_ops):
       target_expression = ast.unparse(target_tree)
-      try: target = eval(compile(target_expression, '<ast>', 'eval'))
+      try: target = eval(compile(target_expression, '<ast>', 'eval')) # FIXME: program stalls if target_expression evals to a huge number
       except ZeroDivisionError: continue
       if target.is_integer() and TARGET_MIN <= target <= TARGET_MAX: break
   print(numbers)
