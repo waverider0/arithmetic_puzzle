@@ -34,11 +34,11 @@ if __name__ == '__main__':
       parse = int
       check = lambda x: x == exact
     else:
-      a = random.randint(*MUL_L)
+      a = random.randint(MUL_L[0]*MUL_R[0], MUL_L[1]*MUL_R[1])
       b = random.randint(*MUL_R)
       exact = a / b
       parse = float
-      check = lambda x: abs(x - exact) <= 0.01
+      check = lambda x: abs((x - exact) / exact) <= 0.01
 
     ans = None
     while ans is None or not check(ans):
