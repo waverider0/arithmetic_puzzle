@@ -8,7 +8,7 @@ import time
 OPS = ['+', '-', '*', '/']
 ADD_L = [2, 100]
 ADD_R = [2, 100]
-MUL_L = [2, 12]
+MUL_L = [2, 25]
 MUL_R = [2, 100]
 DURATION_SECONDS = 120
 
@@ -20,28 +20,30 @@ if __name__ == '__main__':
 
   while running.is_set():
     op = random.choice(OPS)
-    match op:
-      case '+' | '-':
-        a = random.randint(*ADD_L)
-        b = random.randint(*ADD_R)
-        exact = a+b if op == '+' else a-b
-        ans = None
-        while ans != exact: ans = int(input(f'{a} {op} {b} = ')) # FIXME: a non-number typo breaks the program and ends the game prematurely
-        score += 1
-        print(f'Score: {score}')
-      case '*':
-        a = random.randint(*MUL_L)
-        b = random.randint(*MUL_R)
-        exact = a * b
-        ans = None
-        while ans != exact: ans = int(input(f'{a} * {b} = '))
-        score += 1
-        print(f'Score: {score}')
-      case '/':
-        a = random.randint(*MUL_L)
-        b = random.randint(*MUL_R)
-        exact = a / b
-        ans = None
-        while ans is None or abs((ans - exact) / exact > 0.01): ans = float(input(f'{a} / {b} = '))
-        score += 1
-        print(f'Score: {score}')
+
+    if op in '+-':
+      a = random.randint(*ADD_L)
+      b = random.randint(*ADD_R)
+      exact = a + b if op == '+' else a - b
+      parse = int
+      check = lambda x: x == exact
+    elif op == '*':
+      a = random.randint(*MUL_L)
+      b = random.randint(*MUL_R)
+      exact = a * b
+      parse = int
+      check = lambda x: x == exact
+    else:
+      a = random.randint(*MUL_L)
+      b = random.randint(*MUL_R)
+      exact = a / b
+      parse = float
+      check = lambda x: abs(x - exact) <= 0.01
+
+    ans = None
+    while ans is None or not check(ans):
+      try: ans = parse(input(f'{a} {op} {b} = '))
+      except ValueError: continue
+
+    score += 1
+    print(f'Score: {score}')
