@@ -4,6 +4,7 @@
 # log10(3) = 0.48
 # log10(5) = 0.7
 # 1 / log10(e) = 2.3
+# 1 / log10(2) = 3.3
 
 from math import log, log2, log10
 import random
