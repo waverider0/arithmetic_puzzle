@@ -22,5 +22,4 @@ if __name__ == '__main__':
     exact = (log if fn=='ln' else log2 if fn=='log2' else log10)(x)
     ans = float(input(f'{fn}({x}) = '))
 
-  print(f'Exact: {round(exact, 2)}')
-  print(f'Error: {round((ans - exact) / exact * 100, 2)}%')
+  print(f'Exact: {round(exact, 2)} ({round((ans - exact) / exact * 100, 2)}% error)')

@@ -38,12 +38,13 @@ if __name__ == '__main__':
       b = random.randint(*MUL_R)
       exact = a / b
       parse = float
-      check = lambda x: abs((x - exact) / exact) <= 0.01
+      check = lambda x: abs((x - exact) / exact) <= 0.01 # TODO: print error when you get the problem correct
 
     ans = None
     while ans is None or not check(ans):
       try: ans = parse(input(f'{a} {op} {b} = '))
       except ValueError: continue
 
+    if op == '/': print(f'Exact: {round(exact, 2)} ({round((ans - exact) / exact * 100, 2)}% error)')
     score += 1
     print(f'Score: {score}')
