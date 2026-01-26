@@ -4,12 +4,10 @@ import ast
 from collections import defaultdict
 import random
 
-LIST_SIZE = 4
-TARGET_MIN = 10
-TARGET_MAX = 200
-NUMBER_MIN = 1
-NUMBER_MAX = 20
 OPS = ['Add', 'Sub', 'Mult', 'Div']
+TARGET_MIN = 10
+TARGET_MAX = 300
+LIST_SIZE = 5
 
 def generate_random_expression(leaves):
   if len(leaves) == 1: return ast.Constant(value=leaves[0])
@@ -49,7 +47,7 @@ if __name__ == '__main__':
     numbers = []
     counts = defaultdict(int)
     for i in range(LIST_SIZE):
-      numbers.append(random.randint(NUMBER_MIN, NUMBER_MAX))
+      numbers.append(random.randint(1, 20))
       counts[numbers[i]] += 1
     target_tree = generate_random_expression(numbers)
     visitor = TargetVisitor()

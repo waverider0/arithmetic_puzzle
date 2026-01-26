@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 # log10(2) = 0.3
+# log10(3) = 0.48
 # log10(5) = 0.7
-# 1 / log10(2) = 3.3
 # 1 / log10(e) = 2.3
 
 from math import log, log2, log10
