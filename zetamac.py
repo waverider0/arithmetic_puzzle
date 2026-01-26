@@ -5,10 +5,10 @@ import threading
 import time
 
 OPS = ['Add', 'Sub', 'Mul', 'Div']
-ADD_MIN = (2,1000)
-ADD_MAX = (2,1000)
-MUL_MIN = (2,100)
-MUL_MAX = (2,100)
+ADD_L = [2, 1000]
+ADD_R = [2, 1000]
+MUL_L = [2, 100]
+MUL_R = [2, 100]
 DURATION_SECONDS = 120
 
 if __name__ == '__main__':
@@ -21,7 +21,20 @@ if __name__ == '__main__':
 
   while running.is_set():
     op = random.choice(OPS)
-    if op in ['Add', 'Sub']: pass
-    elif op in ['Mul', 'Div']: pass
+    match op:
+      case 'Add':
+        a = random.randint(*ADD_L)
+        b = random.randint(*ADD_R)
+        correct = a + b
+        answer = int(input(f'{a} + {b} = '))
+      case 'Sub':
+        a = random.randint(*ADD_L)
+        b = random.randint(*ADD_R)
+        correct = a - b
+        answer = int(input(f'{a} - {b} = '))
+      case 'Mul':
+        pass
+      case 'Div':
+        pass
 
   print(score)

@@ -12,12 +12,12 @@ if __name__ == '__main__':
   fn = random.choice(['pow', 'log10', 'log2', 'ln'])
 
   if fn == 'pow':
-    a = random.randint(2,20)
-    x = random.randint(2,20)
+    a = random.randint(2, 20)
+    x = random.randint(2, 20)
     exact = a ** x
     ans = float(input(f'{a}^{x} = '))
   else:
-    x = random.randint(2,1000)
+    x = random.randint(2, 1000)
     exact = (log if fn=='ln' else log2 if fn=='log2' else log10)(x)
     ans = float(input(f'{fn}({x}) = '))
 
