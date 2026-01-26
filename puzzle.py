@@ -3,6 +3,7 @@
 import ast
 from collections import defaultdict
 import random
+import readline
 
 OPS = ['Add', 'Sub', 'Mult', 'Div']
 TARGET_MIN = 10

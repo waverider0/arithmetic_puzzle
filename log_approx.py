@@ -7,6 +7,7 @@
 
 from math import log, log2, log10
 import random
+import readline
 
 if __name__ == '__main__':
   fn = random.choice(['pow', 'log10', 'log2', 'ln'])
