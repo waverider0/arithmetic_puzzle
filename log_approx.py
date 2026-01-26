@@ -9,16 +9,17 @@ from math import log, log2, log10
 import random
 
 if __name__ == '__main__':
-  f = random.choice(['pow', 'log10', 'log2', 'ln'])
+  fn = random.choice(['pow', 'log10', 'log2', 'ln'])
 
-  if f == 'pow':
-    a,x = random.randint(2, 20), random.randint(1, 20)
+  if fn == 'pow':
+    a = random.randint(2,20)
+    x = random.randint(2,20)
     exact = a ** x
-    ans = float(input(f'{a} ** {x} = '))
+    ans = float(input(f'{a}^{x} = '))
   else:
-    x = random.randint(2,500)
-    exact = (log if f=='ln' else log10 if f=='log10' else log2)(x)
-    ans = float(input(f"{f}({x}) = "))
+    x = random.randint(2,1000)
+    exact = (log if fn=='ln' else log2 if fn=='log2' else log10)(x)
+    ans = float(input(f'{fn}({x}) = '))
 
   print(f'Exact: {round(exact, 2)}')
   print(f'Error: {round((ans - exact) / exact * 100, 2)}%')
