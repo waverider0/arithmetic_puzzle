@@ -51,16 +51,16 @@ def make_tan():
   return f'tan({x_deg}°) = ', math.tan(math.radians(x_deg))
 
 def make_asin():
-  x = round(random.uniform(-0.99, 0.99), 3)
-  return f'asin({x}) = ', math.asin(x)
+  x = round(random.uniform(-0.99, 0.99), 2)
+  return f'asin({x}) = ', math.degrees(math.asin(x))
 
 def make_acos():
-  x = round(random.uniform(-0.99, 0.99), 3)
-  return f'acos({x}) = ', math.acos(x)
+  x = round(random.uniform(-0.99, 0.99), 2)
+  return f'acos({x}) = ', math.degrees(math.acos(x))
 
 def make_atan():
   x = round(random.uniform(-10, 10), 2)
-  return f'atan({x}) = ', math.atan(x)
+  return f'atan({x}) = ', math.degrees(math.atan(x))
 
 #
 # hyperbolic trig
