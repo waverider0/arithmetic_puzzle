@@ -19,7 +19,7 @@ def make_pow():
   return f'{a}^{x} = ', a ** x
 
 def make_exp():
-  x = random.uniform(0.5, 5.0)
+  x = random.uniform(-5, 5)
   return f'e^{x:.2f} = ', math.exp(x)
 
 def make_ln():
