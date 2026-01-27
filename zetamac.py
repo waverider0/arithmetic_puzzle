@@ -38,7 +38,7 @@ if __name__ == '__main__':
       b = random.randint(*MUL_R)
       exact = a / b
       parse = float
-      check = lambda x: abs((x - exact) / exact) <= 0.01 # TODO: print error when you get the problem correct
+      check = lambda x: abs((x - exact) / exact) <= 0.01
 
     ans = None
     while ans is None or not check(ans):
