@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
-# log10(2) = 0.3
-# log10(3) = 0.48
-# log10(5) = 0.7
-# 1 / log10(e) = 2.3
 
 import math
 import random
 import readline
 
-#
-# exponentials
-#
+# log10(2) = 0.3
+# log10(3) = 0.48
+# log10(5) = 0.7
+# 1 / log10(e) = 2.3
 
 def make_pow():
   a = random.randint(2, 20)
@@ -34,9 +31,14 @@ def make_log10():
   x = random.randint(2, 1000)
   return f'log10({x}) = ', math.log10(x)
 
+# deg | sin  | cos  | tan
+# ----|------|------|-------
+#   0 | 0    | 1    | 0
+#  30 | 1/2  | √3/2 | √3/3
+#  60 | √3/2 | 1/2  | √3
+#  90 | 1    | 0    | ±∞
 #
-# trig
-#
+# √3 = 1.73
 
 def make_sin():
   x_deg = random.randint(-360, 360)
