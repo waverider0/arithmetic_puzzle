@@ -8,7 +8,8 @@ import readline
 # log10(2) = 0.3
 # log10(3) = 0.48
 # log10(5) = 0.7
-# 1 / log10(e) = 2.3
+# 1/log10(e) = 2.3
+# e^x = 10^(x/2.3)
 
 def make_pow():
   a = random.randint(2, 20)
@@ -64,13 +65,9 @@ def make_atan():
   x = round(random.uniform(-10, 10), 2)
   return f'atan({x}) = ', math.degrees(math.atan(x))
 
-#  x      | sinh   | cosh     | tanh
-# --------|--------|----------|------
-# (-1,1)  | x      | x²/2 + 1 | x
-# [-1,-∞) | -e⁻ˣ/2 | e⁻ˣ/2    | -1
-# [1,∞)   | eˣ/2   | eˣ/2     | 1
-#
-# max error | 15%    | 15%      | 30%
+# sinh(x) = (eˣ - e⁻ˣ) / 2
+# cosh(x) = (eˣ + e⁻ˣ) / 2
+# tanh(x) = sinh(x) / cosh(x)
 
 def make_sinh():
   x = round(random.uniform(-5, 5), 2)
