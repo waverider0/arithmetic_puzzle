@@ -9,7 +9,6 @@ import readline
 # log10(3) = 0.48
 # log10(5) = 0.7
 # 1/log10(e) = 2.3
-# e^x = 10^(x/2.3)
 
 def make_pow():
   a = random.randint(2, 20)
