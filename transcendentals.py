@@ -64,9 +64,13 @@ def make_atan():
   x = round(random.uniform(-10, 10), 2)
   return f'atan({x}) = ', math.degrees(math.atan(x))
 
+#  x        | sinh   | cosh     | tanh
+# ----------|--------|----------|------
+# (-1,1)    | x      | x²/2 + 1 | x
+# [-1,-inf) | -e⁻ˣ/2 | e⁻ˣ/2    | -1
+# [1,inf)   | eˣ/2   | eˣ/2     | 1
 #
-# hyperbolic trig
-#
+# max error | 15%    | 15%      | 30%
 
 def make_sinh():
   x = round(random.uniform(-5, 5), 2)
